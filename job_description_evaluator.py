@@ -4,24 +4,29 @@ Created on Thu Sep 22 16:37:22 2016
 
 """
 
+from nltk.corpus import stopwords
 from collections import Counter
+import string
+# stopwords has to be downloaded to system once
+#import nltk
+#nltk.download('stopwords')
 #list of words to remove
-words_unwanted = ['and', 'with', 'to', 'in', 'the', 'for', 'we', 'on', 'a', 'or', 'of']
-punctuation = ['.', ',', '?', '-']
+words_unwanted = set(stopwords.words('english'))
+punctuation = string.punctuation#['.', ',', '?', '-']
 #list of knowns and initiation of used lists for search function
 cad_known = ['nx', 'solidworks', 'autocad','inventor']
 cad_used = []
-programming_known = ['python', 'vba']
+programming_known = ['python', 'vba','javascript']
 programming_used = []
 software_known = ['ms office', 'microsoft office', 'matlab']
 software_used = []
-skills_known = ['3d modeling', 'fea', 'finite element analysis', 'fem', 'finite element method', 'stress analysis', 'fabrication', 'machining', 'cad', 'communication', 'organization']
+skills_known = ['problem solving','prototyping','3d modeling', 'solid modeling', 'fea', 'finite element analysis', 'fem', 'finite element method', 'stress analysis', 'fabrication', 'machining', 'cad', 'communication', 'organization']
 skills_used = []
 education_known = ['bs', 'bachelors', "bachelor's"]
 education_used = []
 #job posting
 words = """
-job description
+ 
 """
 #normalize text to lowercase
 words = words.lower()
@@ -36,6 +41,7 @@ def search(known,used):
 		if y in words:
 			used.append(y)
 	return used
+# find profile matches
 search(cad_known,cad_used)
 search(programming_known,programming_used)
 search(software_known,software_used)
@@ -48,9 +54,10 @@ for x in wordlist:
 	for y in words_unwanted:
 		if x == y:
 			wordlist.remove(x)
-#determine which words are used the 
+#determine which words are used the most
 frequency = Counter(wordlist).most_common()
-#print(frequency)
+# print results
+print(frequency[:10])
 print('cad:',cad_used)
 print('programming:',programming_used)
 print('software:',software_used)
